@@ -1,11 +1,10 @@
 class Book
-    attr_accessor :title, :author, :word_count
+    attr_accessor :title, :word_count
 
     @@all = []
 
-    def initialize(title, author, word_count)
+    def initialize(title, word_count)
         @title = title
-        @author = author
         @word_count = word_count 
         save
     end
@@ -14,11 +13,17 @@ class Book
         @@all 
     end
 
-
+    def authors
+        write.map{|write| write.author}
+    end
 
     private
 
     def save
         @@all << self
+    end
+
+    def write
+        Write.all.select{|write| write.book == self }
     end
 end

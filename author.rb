@@ -13,11 +13,13 @@ class Author
     end
 
     def books
-        Book.all.select{|book| book.author == self}
+        write.map{|write| write.book}
     end
 
     def write_book(title, word_count)
-        Book.new(title, self, word_count)
+        new_book = Book.new(title, word_count)
+        Write.new(new_book, self)
+        new_book 
     end
 
     def total_words
@@ -33,4 +35,8 @@ class Author
     def save
         @@all << self 
     end 
+
+    def write
+        Write.all.select{|write| write.author == self }
+    end
 end
